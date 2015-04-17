@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% import "_forms.html" as forms %}
+{% set active_page = "admin_customize" %}
+
+{% block content %}
+    <div class="form-group">
+        {% if create %}
+            {% set action_url = url_for('admin.page.create') %}
+        {% else %}
+            {% set action_url = url_for('admin.page.customize', page_slug=page.slug) %}
+        {% endif %}
+
+        {% call forms.render_form(form, action_url=action_url, action_text='Save') %}
+            {{ forms.render_field(form.name, label_visible=true, type='text', required='required') }}
+            {{ forms.render_field(form.slug, label_visible=true, type='text', required='required') }}
+            {{ forms.render_field(form.hero_image_url, label_visible=true, type='url', required='required') }}
+        {% endcall %}
+    </div>
+{% endblock content %}
+
+{% block js_footer %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/slugify.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/page_customize.js') }}"></script>
+{% endblock %}

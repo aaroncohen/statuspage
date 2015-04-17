@@ -1,0 +1,47 @@
+<div id="create-incident">
+    <div class="page-header">
+        <h3>Create Incident</h3>
+    </div>
+
+    <form role="form" method="post" action="{{ url_for('admin.page.incidents.create', page_slug=page.slug) }}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name" class="control-label">Incident Name</label>
+                    <input class="form-control" id="create-incident-name" name="name"
+                           placeholder="Incident Name" type="text" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="status" class="control-label">Incident Status</label><br>
+            <label class="radio-inline">
+                <input type="radio" name="status" id="create-incident-radios-1"
+                       value="investigating" checked>
+                Investigating
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="status" id="create-incident-radios-2" value="identified">
+                Identified
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="status" id="create-incident-radios-3" value="monitoring">
+                Monitoring
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="status" id="create-incident-radios-4" value="resolved">
+                Resolved
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="create-incident-message" class="control-label">Message</label>
+            <textarea rows="3" class="form-control" id="create-incident-message"
+                      name="message" placeholder="Message" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Incident</button>
+    </form>
+
+</div>

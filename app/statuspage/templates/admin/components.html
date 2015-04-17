@@ -1,0 +1,71 @@
+{% extends "admin/base.html" %}
+{% set active_page = "admin_components" %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/admin/page_components.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="list-group" id="component-sortable-list" data-page-slug="{{ page.slug }}">
+                {% for component in page.components | sort(attribute='position') %}
+                    {% include 'admin/partials/components_item.html' %}
+                {% endfor %}
+            </div>
+
+            <div class="list-group {% if page.components | length %}hidden{% endif %}" id="no-components-notification">
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <strong class="list-group-item-heading">No components, yet.</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-group hidden" id="add-component-list" data-page-slug="{{ page.slug }}">
+                <div class="list-group-item list-group-item-info" id="item-add">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <form class="form-horizontal" role="form" id="add-component-form">
+                                <div class="form-group">
+                                    <label for="new-component-name" class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="new-component-name" name="name" placeholder="Component Name" required>
+                                    </div>
+                                    <label for="new-component-desc" class="col-sm-2 control-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control new-component-desc" id="new-component-desc"
+                                               name="description" placeholder="Component Description">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-1 text-right">
+                            <a id="cancel-new-component-icon"
+                               data-toggle="tooltip" title="Delete Component">
+                                <span class="glyphicon glyphicon-trash"></span></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <a type="button" class="btn btn-sm btn-primary" id="save-new-component-button">Save</a>
+                            <a type="button" class="btn btn-sm btn-default" id="cancel-new-component-button">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a type="button" class="btn btn-default" id="add-component-button">Add Component</a>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block js_footer %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/jquery_ui_sortable/jquery-ui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/page_components.js') }}"></script>
+{% endblock %}

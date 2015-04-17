@@ -1,0 +1,17 @@
+{% import '_color_class_macros.html' as color_macros %}
+{% set open_incidents = page.incidents | rejectattr('resolved_at') | sort(attribute='updated_at') %}
+
+<div id="open-incidents">
+    <div class="page-header">
+        <h3>Open Incidents</h3>
+    </div>
+    <div class="list-group" id="incident-list" data-page-slug="{{ page.slug }}">
+        {% for incident in open_incidents %}
+            {% include 'admin/partials/incident_item.html' %}
+        {% else %}
+            <div class="list-group-item" id="no-incidents-notification">
+                <strong>No active incidents.</strong>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% set active_page = "admin_dashboard" %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/admin/open_incident.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    {% include 'admin/partials/open_incidents.html' %}
+
+    <button id="show-create-incident-button" type="button" class="btn btn-primary">Create Incident</button>
+    <div class="hidden" id="create-incident-wrapper">
+        {% include 'admin/partials/create_incident.html' %}
+    </div>
+
+    {% include 'admin/partials/component_status_setter.html' %}
+{% endblock content %}
+
+{% block js_footer %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/page_dashboard.js') }}"></script>
+{% endblock %}

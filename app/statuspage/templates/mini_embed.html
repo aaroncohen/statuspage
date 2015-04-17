@@ -1,0 +1,8 @@
+<span class="status-indicator {{ page.status }}"></span>
+<a href="{{ url_for('statuspage.statuspage', page_slug=(page.slug), _external=True) }}">{{- page.status | replace("_", " ") | title -}}</a>
+
+{#classes are:#}
+{#    all_services_operational#}
+{#    degraded_performance#}
+{#    partial_outage#}
+{#    major_outage#}

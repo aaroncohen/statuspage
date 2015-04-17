@@ -1,0 +1,24 @@
+{% macro incident_status(status) -%}
+    {% if status == 'investigating' %}
+        text-danger
+    {% elif status == 'identified' %}
+        text-warning
+    {% elif status == 'monitoring' %}
+        text-primary
+    {% elif status == 'resolved' %}
+        text-success
+    {% endif %}
+{% endmacro %}
+
+
+{% macro comp_status(status) -%}
+    {% if status == 'major_outage' %}
+        text-danger
+    {% elif status == 'partial_outage' %}
+        text-warning
+    {% elif status == 'degraded_performance' %}
+        text-primary
+    {% elif status == 'operational' %}
+        text-success
+    {% endif %}
+{% endmacro %}

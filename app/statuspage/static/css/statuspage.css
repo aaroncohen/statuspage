@@ -1,0 +1,18 @@
+.container .jumbotron {
+    background-color: black;
+    padding: 0 0 0 0;
+    border-radius: 0;
+}
+
+.container .jumbotron h1 {
+    text-align: center;
+    color: white;
+    font-size: 3em;
+    margin: 0 0 0 0;
+    padding: 10px 0 10px 0
+}
+
+.container .jumbotron img {
+    width: 100%;
+}
+

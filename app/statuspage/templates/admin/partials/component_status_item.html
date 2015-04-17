@@ -1,0 +1,35 @@
+{# Don't forget to add the required javascript to the pages you use this on #}
+<div class="component-status-item" id="component-status-item-{{ component.id }}">
+    <form class="form-horizontal component-status-form" role="form" method="post" action="{{ url_for('admin.page.components.status', page_slug=component.page.slug, component_id=component.id) }}">
+        <div class="form-group">
+            <div class="col-md-3">
+                <label class="radio-inline">
+                    <input type="radio" name="component-status-radios-{{ component.id }}" id="component-status-radios-{{ component.id }}-1" value="operational"
+                           {% if component.status == 'operational' %}checked{% endif %}>
+                    Operational
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label class="radio-inline">
+                    <input type="radio" name="component-status-radios-{{ component.id }}" id="component-status-radios-{{ component.id }}-1" value="degraded_performance"
+                           {% if component.status == 'degraded_performance' %}checked{% endif %}>
+                    Degraded Performance
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label class="radio-inline">
+                    <input type="radio" name="component-status-radios-{{ component.id }}" id="component-status-radios-{{ component.id }}-1" value="partial_outage"
+                           {% if component.status == 'partial_outage' %}checked{% endif %}>
+                    Partial Outage
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label class="radio-inline">
+                    <input type="radio" name="component-status-radios-{{ component.id }}" id="component-status-radios-{{ component.id }}-1" value="major_outage"
+                           {% if component.status == 'major_outage' %}checked{% endif %}>
+                    Major Outage
+                </label>
+            </div>
+        </div>
+    </form>
+</div>

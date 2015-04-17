@@ -1,0 +1,19 @@
+{% import '_color_class_macros.html' as color_macros %}
+
+<div id="component-status-setter">
+    <div class="page-header">
+        <h3>Component Statuses</h3>
+    </div>
+    {% for component in page.components | sort(attribute='position') %}
+        <div class="row {% if component.status != 'operational' %}bg-danger{% endif %}">
+            <div class="col-md-2">
+                <h5 class="{{ color_macros.comp_status(component.status) }}">{{ component.name }}</h5>
+            </div>
+            <div class="col-md-10">
+                {% include 'admin/partials/component_status_item.html' %}
+            </div>
+        </div>
+        <hr class="small">
+    {% endfor %}
+</div>
+

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% import '_color_class_macros.html' as color_macros %}
+
+{% block head %}
+{{ super() }}
+<link href="{{ url_for('static', filename='css/statuspage.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_header %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="jumbotron">
+                    <img class="hidden-xs" src="{{ page.hero_image_url }}">
+                    <h1>{{ page.name }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h3 class="panel-title">
+                                    {{ page.status | replace("_", " ") | title }}</h3>
+                            </div>
+                            <div class="hidden-xs hidden-sm col-md-4 text-right">
+                                <small id="page-refreshed-time"></small>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group center-block">
+                        {% for component in page.components | sort(attribute='position') %}
+                        <li class="list-group-item danger">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ component.name }} {% if component.description %}<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="{{ component.description }}"></span>{% endif %}
+                                    <div class="pull-right {{ color_macros.comp_status(component.status) }}">{{ component.status | replace("_", " ") | title }}</div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        {% if not page.components|length %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <strong class="list-group-item-heading">No components, yet.</strong>
+                                </div>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>Past Incidents</h2>
+                {% for past_date in past_dates %}
+                    {% if past_date['incidents'] %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>{{ past_date['date'].strftime("%b %d, %Y") }}</h4>
+                            <hr class="small"/>
+                            {% for incident in past_date['incidents'] | sort(attribute='updated_at', reverse=True) %}
+                            <h4 class="{{ color_macros.incident_status(incident.status) }}">{{ incident.name }}</h4>
+                            <dl>
+                                {% for update in incident.updates | sort(attribute='updated_at', reverse=True) %}
+                                <dt class="{{ color_macros.incident_status(update.status) }}">{{ update.status | replace("_", " ") | title }}</dt>
+                                <dd>
+                                    {{ update.body }}
+                                    <p class="small text-muted">{{ update.updated_at.strftime("%b %d, %H:%M %Z") }}</p>
+                                </dd>
+                                {% endfor %}
+                                {% if not incident.updates|length %}
+                                <dt class="text-info">Updates to follow.</dt>
+                                <dd>
+                                    <p class="small text-muted">{{ incident.updated_at.strftime("%b %d, %H:%M %Z") }}</p>
+                                </dd>
+                                {% endif %}
+                            </dl>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>{{ past_date['date'].strftime("%b %d, %Y") }}</h4>
+                            <hr>
+                            <h5 class="text-muted">No incidents reported {% if past_date['date'].date() == past_date['date'].today().date() %}today{% endif %}</h5>
+                            <dl></dl>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js_footer %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/statuspage.js') }}"></script>
+{% endblock %}

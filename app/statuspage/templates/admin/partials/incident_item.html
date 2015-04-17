@@ -1,0 +1,41 @@
+{# Requires open_incident.css #}
+{% set last_update = incident.last_update %}
+
+<div class="list-group-item" id="incident-item-{{ incident.id }}">
+    <div class="row">
+        <div class="col-md-4">
+            <p><strong>{{ incident.name }} - <small class="{{ color_macros.incident_status(incident.status) }}">{{ incident.status | title }}</small></strong></p>
+            <small>Created {{ incident.created_at.strftime("%H:%M %Z %b %d") }} / Updated {{ incident.updated_at.strftime("%H:%M %Z %b %d") }}</small>
+        </div>
+        <div class="col-md-7">
+            <p><small><strong>Last Update: </strong> {{ last_update.body }} - <em>{{ last_update.updated_at.strftime("%H:%M %Z %b %d") }}</em></small></p>
+            <form class="form-inline update-incident-form" id="update-incident-form-{{ incident.id }}" role="form"
+                  action="{{ url_for('admin.page.incidents.update', page_slug=incident.page.slug, incident_id=incident.id) }}" method="POST"
+                  data-incident-id="{{ incident.id }}">
+                <div class="form-group">
+                    <select class="form-control" name="status">
+                        <option value="investigating">Investigating</option>
+                        <option value="identified" {% if incident.status == 'investigating' %}selected{% endif %}>Identified</option>
+                        <option value="monitoring" {% if incident.status == 'identified' %}selected{% endif %}>Monitoring</option>
+                        <option value="resolved" {% if incident.status == 'monitoring' %}selected{% endif %}>Resolved</option>
+                        </select>
+                    <div class="input-group input-group">
+                        <textarea name="message" rows="1" class="form-control" placeholder="Incident Status Update"></textarea>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Post!</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-1 text-right">
+{#            <a class="edit-incident-button" data-incident-id="{{ incident.id }}"#}
+{#               data-toggle="tooltip" title="Edit Incident">#}
+{#                <span class="glyphicon glyphicon-edit"></span></a>#}
+            <a class="delete-incident-button" data-incident-id="{{ incident.id }}"
+               data-toggle="tooltip" title="Delete Incident">
+                <span class="glyphicon glyphicon-trash"></span></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block page_title %}
+        {% if page is defined %}
+        <title>{{ page.name }}</title>
+        {% else %}
+        <title>Status Page</title>
+        {% endif %}
+    {% endblock page_title %}
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+    {% endblock %}
+</head>
+
+<body>
+{% block topbar %}{% endblock %}
+<div class="container">
+    <div class="content">
+        {% block page_header %}{% endblock %}
+        {% block sub_nav %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container text-center">
+        <hr class="small">
+        <h6 class="text-info">Created by the BitTorrent DevApps team.</h6>
+    </div>
+</div>
+
+{% block js_footer %}
+    <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
+{% endblock %}
+</body>
+</html>

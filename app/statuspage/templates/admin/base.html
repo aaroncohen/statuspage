@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/admin/base.css') }}" rel="stylesheet">
+{% endblock %}
+
+{%- block topbar -%}
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#statuspage-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('admin.pages') }}">StatusPage</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="statuspage-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li {% if active_page == "admin_pages" %} class="active"{% endif%}>
+                        <a href="{{ url_for('admin.pages') }}">Pages</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                {% if current_user and current_user.name %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user.name }} <b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" class="dropdown-header">{{ current_user.email }}</li>
+                            <li role="presentation"><a role="menuitem" href="{{ url_for("oauth.logout") }}">Logout</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a href="{{ url_for('oauth.login') }}">Log In</a></li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{%- endblock topbar -%}
+
+{% block page_header %}
+    {% if create %}
+    <div class="page-header">
+        <h2>Create New Page</h2>
+    </div>
+    {% else %}
+    <div class="page-header">
+        <h2>
+            <a href="{{ url_for('admin.pages') }}"
+               data-toggle="tooltip" title="Back to page list"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            Manage {{ page.name }}
+        </h2>
+    </div>
+    {% endif %}
+{% endblock page_header %}
+
+{% block sub_nav %}
+    {% if page and not create %}
+    <ul class="nav nav-tabs" role="tablist" id="admin_nav_tabs">
+        <li class="{% if active_page == 'admin_dashboard' %}active{% endif %}">
+            <a href="{{ url_for('admin.page.dashboard', page_slug=page.slug) }}" role="tab">Dashboard</a>
+        </li>
+        <li class="{% if active_page == 'admin_components' %}active{% endif %}">
+            <a href="{{ url_for('admin.page.components', page_slug=page.slug) }}" role="tab">Components</a>
+        </li>
+        <li class="{% if active_page == 'admin_customize' %}active{% endif %}">
+            <a href="{{ url_for('admin.page.customize', page_slug=page.slug) }}" role="tab">Customize Page</a>
+        </li>
+    </ul>
+    {% endif %}
+{% endblock sub_nav %}
+
+{% block content %}{% endblock content %}

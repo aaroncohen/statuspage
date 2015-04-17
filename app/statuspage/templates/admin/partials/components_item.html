@@ -1,0 +1,23 @@
+<div class="list-group-item" id="item-{{ component.id }}">
+    <div class="row">
+        <div class="col-md-11">
+            <h4>{{ component.name }} - <small>{{ component.description }}</small></h4>
+        </div>
+        <div class="col-md-1 text-right">
+            <a class="edit-component-button" data-component-id="{{ component.id }}"
+               data-toggle="tooltip" title="Edit Component">
+                <span class="glyphicon glyphicon-edit"></span></a>
+            <a class="delete-component-button" data-component-id="{{ component.id }}"
+               data-toggle="tooltip" title="Delete Component">
+                <span class="glyphicon glyphicon-trash"></span></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11 text-center">
+            {% include 'admin/partials/component_status_item.html' %}
+        </div>
+        <div class="col-md-1 text-right">
+            <span class="glyphicon glyphicon-align-justify handle"></span>
+        </div>
+    </div>
+</div>

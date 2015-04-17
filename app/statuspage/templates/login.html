@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% set active_page = "login" %}
+
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/bootstrap-social.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_header %}
+    <div class="page-header">
+        <h1>Login</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="{{ login_url }}" class="btn btn-block btn-social btn-google-plus">
+                    <i class="fa fa-google"></i> Sign in with Google
+                </a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
